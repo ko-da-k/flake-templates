@@ -28,18 +28,19 @@
             hello
           '';
         };
-        # packages.default = pkgs.stdenv.mkDerivation {
-        #   name = "basic_app";
-        #   src = self;
-        #   buildInputs = buildInputs;
-        #   buildPhase = ''
-        #     hello
-        #   '';
-        #   installPhase = ''
-        #     mkdir -p $out/bin
-        #     echo "install path is $out"
-        #   '';
-        # };
+        packages.default = pkgs.stdenv.mkDerivation {
+          name = "example_app";
+          src = self;
+          buildInputs = buildInputs;
+          buildPhase = ''
+            echo '#!/bin/bash' > example_app && echo 'echo "run example_app successfully"' >> example_app
+            chmod +x example_app
+          '';
+          installPhase = ''
+            mkdir -p $out/bin
+            cp example_app $out/bin/
+          '';
+        };
       }
     );
 }
